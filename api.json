@@ -1,0 +1,2496 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "A Bisnode microservice",
+    "version": "1.0.0",
+    "title": "Bisnode Microservice",
+    "termsOfService": "https://www.bisnode.com",
+    "contact": {
+      "name": "Bisnode",
+      "url": "https://www.bisnode.com",
+      "email": "bisnodesverige.se@bisnode.com"
+    },
+    "license": {
+      "name": "Proprietary",
+      "url": "https://www.bisnode.com"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/credit-data-persons/v1",
+  "tags": [
+    {
+      "name": "Person Credit Data",
+      "description": "REST API for Person Credit Data"
+    },
+    {
+      "name": "Person Search",
+      "description": "REST API for searching for Persons"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/persons": {
+      "post": {
+        "tags": [
+          "Person Search"
+        ],
+        "summary": "Endpoint that allows searching for person basic data",
+        "operationId": "personSearchUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "apiPersonSearchRequest",
+            "description": "apiPersonSearchRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ApiPersonSearchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiPersonSearchResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              ""
+            ]
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/persons/dk": {
+      "post": {
+        "tags": [
+          "Person Credit Data"
+        ],
+        "summary": "Endpoint that allows retrieving Danish person credit data",
+        "operationId": "retrieveDenmarkPersonReportUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "apiPersonReportRequest",
+            "description": "apiPersonReportRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DkApiPersonReportRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DanishPersonReport"
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              ""
+            ]
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/persons/fi": {
+      "post": {
+        "tags": [
+          "Person Credit Data"
+        ],
+        "summary": "Endpoint that allows retrieving Finnish person credit data",
+        "operationId": "retrievePersonReportFIUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "apiPersonReportRequest",
+            "description": "apiPersonReportRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FiApiPersonReportRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/FinnishPersonReport"
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              ""
+            ]
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/persons/no": {
+      "post": {
+        "tags": [
+          "Person Credit Data"
+        ],
+        "summary": "Endpoint that allows retrieving Norwegian person credit data",
+        "operationId": "retrievePersonReportNOUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "apiPersonReportRequest",
+            "description": "apiPersonReportRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NoApiPersonReportRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/NorwegianPersonReport"
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              ""
+            ]
+          }
+        ],
+        "deprecated": false
+      }
+    }
+  },
+  "securityDefinitions": {
+    "oauth2": {
+      "type": "oauth2",
+      "tokenUrl": "https://qa-login.bisnode.com/as/token.oauth2",
+      "flow": "application",
+      "scopes": {
+        "": ""
+      }
+    }
+  },
+  "definitions": {
+    "ApiAddress": {
+      "type": "object",
+      "properties": {
+        "postalCode": {
+          "type": "string"
+        },
+        "streetName": {
+          "type": "string"
+        },
+        "town": {
+          "type": "string"
+        }
+      },
+      "title": "ApiAddress"
+    },
+    "ApiDate": {
+      "type": "object",
+      "properties": {
+        "day": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "month": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "year": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "ApiDate"
+    },
+    "ApiPersonHit": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/ApiAddress"
+        },
+        "country": {
+          "type": "string",
+          "enum": [
+            "UNDEFINED",
+            "AC",
+            "AD",
+            "AE",
+            "AF",
+            "AG",
+            "AI",
+            "AL",
+            "AM",
+            "AN",
+            "AO",
+            "AQ",
+            "AR",
+            "AS",
+            "AT",
+            "AU",
+            "AW",
+            "AX",
+            "AZ",
+            "BA",
+            "BB",
+            "BD",
+            "BE",
+            "BF",
+            "BG",
+            "BH",
+            "BI",
+            "BJ",
+            "BL",
+            "BM",
+            "BN",
+            "BO",
+            "BQ",
+            "BR",
+            "BS",
+            "BT",
+            "BU",
+            "BV",
+            "BW",
+            "BY",
+            "BZ",
+            "CA",
+            "CC",
+            "CD",
+            "CF",
+            "CG",
+            "CH",
+            "CI",
+            "CK",
+            "CL",
+            "CM",
+            "CN",
+            "CO",
+            "CP",
+            "CR",
+            "CS",
+            "CU",
+            "CV",
+            "CW",
+            "CX",
+            "CY",
+            "CZ",
+            "DE",
+            "DG",
+            "DJ",
+            "DK",
+            "DM",
+            "DO",
+            "DZ",
+            "EA",
+            "EC",
+            "EE",
+            "EG",
+            "EH",
+            "ER",
+            "ES",
+            "ET",
+            "EU",
+            "EZ",
+            "FI",
+            "FJ",
+            "FK",
+            "FM",
+            "FO",
+            "FR",
+            "FX",
+            "GA",
+            "GB",
+            "GD",
+            "GE",
+            "GF",
+            "GG",
+            "GH",
+            "GI",
+            "GL",
+            "GM",
+            "GN",
+            "GP",
+            "GQ",
+            "GR",
+            "GS",
+            "GT",
+            "GU",
+            "GW",
+            "GY",
+            "HK",
+            "HM",
+            "HN",
+            "HR",
+            "HT",
+            "HU",
+            "IC",
+            "ID",
+            "IE",
+            "IL",
+            "IM",
+            "IN",
+            "IO",
+            "IQ",
+            "IR",
+            "IS",
+            "IT",
+            "JE",
+            "JM",
+            "JO",
+            "JP",
+            "KE",
+            "KG",
+            "KH",
+            "KI",
+            "KM",
+            "KN",
+            "KP",
+            "KR",
+            "KW",
+            "KY",
+            "KZ",
+            "LA",
+            "LB",
+            "LC",
+            "LI",
+            "LK",
+            "LR",
+            "LS",
+            "LT",
+            "LU",
+            "LV",
+            "LY",
+            "MA",
+            "MC",
+            "MD",
+            "ME",
+            "MF",
+            "MG",
+            "MH",
+            "MK",
+            "ML",
+            "MM",
+            "MN",
+            "MO",
+            "MP",
+            "MQ",
+            "MR",
+            "MS",
+            "MT",
+            "MU",
+            "MV",
+            "MW",
+            "MX",
+            "MY",
+            "MZ",
+            "NA",
+            "NC",
+            "NE",
+            "NF",
+            "NG",
+            "NI",
+            "NL",
+            "NO",
+            "NP",
+            "NR",
+            "NT",
+            "NU",
+            "NZ",
+            "OM",
+            "PA",
+            "PE",
+            "PF",
+            "PG",
+            "PH",
+            "PK",
+            "PL",
+            "PM",
+            "PN",
+            "PR",
+            "PS",
+            "PT",
+            "PW",
+            "PY",
+            "QA",
+            "RE",
+            "RO",
+            "RS",
+            "RU",
+            "RW",
+            "SA",
+            "SB",
+            "SC",
+            "SD",
+            "SE",
+            "SF",
+            "SG",
+            "SH",
+            "SI",
+            "SJ",
+            "SK",
+            "SL",
+            "SM",
+            "SN",
+            "SO",
+            "SR",
+            "SS",
+            "ST",
+            "SU",
+            "SV",
+            "SX",
+            "SY",
+            "SZ",
+            "TA",
+            "TC",
+            "TD",
+            "TF",
+            "TG",
+            "TH",
+            "TJ",
+            "TK",
+            "TL",
+            "TM",
+            "TN",
+            "TO",
+            "TP",
+            "TR",
+            "TT",
+            "TV",
+            "TW",
+            "TZ",
+            "UA",
+            "UG",
+            "UK",
+            "UM",
+            "US",
+            "UY",
+            "UZ",
+            "VA",
+            "VC",
+            "VE",
+            "VG",
+            "VI",
+            "VN",
+            "VU",
+            "WF",
+            "WS",
+            "XK",
+            "YE",
+            "YT",
+            "YU",
+            "ZA",
+            "ZM",
+            "ZR",
+            "ZW"
+          ]
+        },
+        "dateOfBirth": {
+          "$ref": "#/definitions/ApiDate"
+        },
+        "fullName": {
+          "type": "string"
+        },
+        "personId": {
+          "type": "string"
+        }
+      },
+      "title": "ApiPersonHit"
+    },
+    "ApiPersonSearchRequest": {
+      "type": "object",
+      "properties": {
+        "country": {
+          "type": "string",
+          "enum": [
+            "UNDEFINED",
+            "AC",
+            "AD",
+            "AE",
+            "AF",
+            "AG",
+            "AI",
+            "AL",
+            "AM",
+            "AN",
+            "AO",
+            "AQ",
+            "AR",
+            "AS",
+            "AT",
+            "AU",
+            "AW",
+            "AX",
+            "AZ",
+            "BA",
+            "BB",
+            "BD",
+            "BE",
+            "BF",
+            "BG",
+            "BH",
+            "BI",
+            "BJ",
+            "BL",
+            "BM",
+            "BN",
+            "BO",
+            "BQ",
+            "BR",
+            "BS",
+            "BT",
+            "BU",
+            "BV",
+            "BW",
+            "BY",
+            "BZ",
+            "CA",
+            "CC",
+            "CD",
+            "CF",
+            "CG",
+            "CH",
+            "CI",
+            "CK",
+            "CL",
+            "CM",
+            "CN",
+            "CO",
+            "CP",
+            "CR",
+            "CS",
+            "CU",
+            "CV",
+            "CW",
+            "CX",
+            "CY",
+            "CZ",
+            "DE",
+            "DG",
+            "DJ",
+            "DK",
+            "DM",
+            "DO",
+            "DZ",
+            "EA",
+            "EC",
+            "EE",
+            "EG",
+            "EH",
+            "ER",
+            "ES",
+            "ET",
+            "EU",
+            "EZ",
+            "FI",
+            "FJ",
+            "FK",
+            "FM",
+            "FO",
+            "FR",
+            "FX",
+            "GA",
+            "GB",
+            "GD",
+            "GE",
+            "GF",
+            "GG",
+            "GH",
+            "GI",
+            "GL",
+            "GM",
+            "GN",
+            "GP",
+            "GQ",
+            "GR",
+            "GS",
+            "GT",
+            "GU",
+            "GW",
+            "GY",
+            "HK",
+            "HM",
+            "HN",
+            "HR",
+            "HT",
+            "HU",
+            "IC",
+            "ID",
+            "IE",
+            "IL",
+            "IM",
+            "IN",
+            "IO",
+            "IQ",
+            "IR",
+            "IS",
+            "IT",
+            "JE",
+            "JM",
+            "JO",
+            "JP",
+            "KE",
+            "KG",
+            "KH",
+            "KI",
+            "KM",
+            "KN",
+            "KP",
+            "KR",
+            "KW",
+            "KY",
+            "KZ",
+            "LA",
+            "LB",
+            "LC",
+            "LI",
+            "LK",
+            "LR",
+            "LS",
+            "LT",
+            "LU",
+            "LV",
+            "LY",
+            "MA",
+            "MC",
+            "MD",
+            "ME",
+            "MF",
+            "MG",
+            "MH",
+            "MK",
+            "ML",
+            "MM",
+            "MN",
+            "MO",
+            "MP",
+            "MQ",
+            "MR",
+            "MS",
+            "MT",
+            "MU",
+            "MV",
+            "MW",
+            "MX",
+            "MY",
+            "MZ",
+            "NA",
+            "NC",
+            "NE",
+            "NF",
+            "NG",
+            "NI",
+            "NL",
+            "NO",
+            "NP",
+            "NR",
+            "NT",
+            "NU",
+            "NZ",
+            "OM",
+            "PA",
+            "PE",
+            "PF",
+            "PG",
+            "PH",
+            "PK",
+            "PL",
+            "PM",
+            "PN",
+            "PR",
+            "PS",
+            "PT",
+            "PW",
+            "PY",
+            "QA",
+            "RE",
+            "RO",
+            "RS",
+            "RU",
+            "RW",
+            "SA",
+            "SB",
+            "SC",
+            "SD",
+            "SE",
+            "SF",
+            "SG",
+            "SH",
+            "SI",
+            "SJ",
+            "SK",
+            "SL",
+            "SM",
+            "SN",
+            "SO",
+            "SR",
+            "SS",
+            "ST",
+            "SU",
+            "SV",
+            "SX",
+            "SY",
+            "SZ",
+            "TA",
+            "TC",
+            "TD",
+            "TF",
+            "TG",
+            "TH",
+            "TJ",
+            "TK",
+            "TL",
+            "TM",
+            "TN",
+            "TO",
+            "TP",
+            "TR",
+            "TT",
+            "TV",
+            "TW",
+            "TZ",
+            "UA",
+            "UG",
+            "UK",
+            "UM",
+            "US",
+            "UY",
+            "UZ",
+            "VA",
+            "VC",
+            "VE",
+            "VG",
+            "VI",
+            "VN",
+            "VU",
+            "WF",
+            "WS",
+            "XK",
+            "YE",
+            "YT",
+            "YU",
+            "ZA",
+            "ZM",
+            "ZR",
+            "ZW"
+          ]
+        },
+        "dateOfBirth": {
+          "type": "string"
+        },
+        "fullName": {
+          "type": "string"
+        },
+        "gedi": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "personId": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "ssn": {
+          "type": "string"
+        },
+        "streetName": {
+          "type": "string"
+        },
+        "town": {
+          "type": "string"
+        }
+      },
+      "title": "ApiPersonSearchRequest"
+    },
+    "ApiPersonSearchResponse": {
+      "type": "object",
+      "properties": {
+        "paging": {
+          "$ref": "#/definitions/Paging"
+        },
+        "persons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApiPersonHit"
+          }
+        }
+      },
+      "title": "ApiPersonSearchResponse"
+    },
+    "DanishConsumerInformation": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "country": {
+          "type": "string"
+        },
+        "creditWarning": {
+          "type": "boolean"
+        },
+        "dateOfBirth": {
+          "$ref": "#/definitions/DanishDateModel"
+        },
+        "directMarketingProtected": {
+          "type": "boolean"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "legalName": {
+          "$ref": "#/definitions/DanishLegalName"
+        },
+        "nameAndAddressProtected": {
+          "type": "boolean"
+        },
+        "registeredAddress": {
+          "$ref": "#/definitions/DanishRegisteredAddress"
+        },
+        "reportAvailable": {
+          "type": "boolean"
+        },
+        "underGuardianship": {
+          "type": "boolean"
+        }
+      },
+      "title": "DanishConsumerInformation"
+    },
+    "DanishDateModel": {
+      "type": "object",
+      "properties": {
+        "day": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "month": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "year": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "DanishDateModel"
+    },
+    "DanishLegalName": {
+      "type": "object",
+      "properties": {
+        "familyName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "fullName": {
+          "type": "string"
+        },
+        "middleName": {
+          "type": "string"
+        }
+      },
+      "title": "DanishLegalName"
+    },
+    "DanishPayment": {
+      "type": "object",
+      "properties": {
+        "paymentRemark": {
+          "$ref": "#/definitions/DanishPaymentRemark"
+        }
+      },
+      "title": "DanishPayment"
+    },
+    "DanishPaymentRemark": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "number": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "remarkGroups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DanishPaymentRemarkGroup"
+          }
+        }
+      },
+      "title": "DanishPaymentRemark"
+    },
+    "DanishPaymentRemarkGroup": {
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": "string"
+        },
+        "remarks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DanishRemark"
+          }
+        }
+      },
+      "title": "DanishPaymentRemarkGroup"
+    },
+    "DanishPersonReport": {
+      "type": "object",
+      "properties": {
+        "consumerInformation": {
+          "$ref": "#/definitions/DanishConsumerInformation"
+        },
+        "personId": {
+          "type": "string"
+        },
+        "risk": {
+          "$ref": "#/definitions/DanishRisk"
+        }
+      },
+      "title": "DanishPersonReport"
+    },
+    "DanishRegisteredAddress": {
+      "type": "object",
+      "properties": {
+        "postalCode": {
+          "type": "string"
+        },
+        "streetAddress": {
+          "type": "string"
+        },
+        "town": {
+          "type": "string"
+        }
+      },
+      "title": "DanishRegisteredAddress"
+    },
+    "DanishRemark": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "creditor": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "documentNumber": {
+          "type": "string"
+        },
+        "expireDate": {
+          "$ref": "#/definitions/DanishDateModel"
+        },
+        "foundationDate": {
+          "$ref": "#/definitions/DanishDateModel"
+        },
+        "paidState": {
+          "type": "string",
+          "enum": [
+            "PARTIALLY_PAID",
+            "UNPAID"
+          ]
+        },
+        "reference": {
+          "type": "string"
+        },
+        "reportingDate": {
+          "$ref": "#/definitions/DanishDateModel"
+        },
+        "source": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "title": "DanishRemark"
+    },
+    "DanishRisk": {
+      "type": "object",
+      "properties": {
+        "payment": {
+          "$ref": "#/definitions/DanishPayment"
+        }
+      },
+      "title": "DanishRisk"
+    },
+    "DkApiPersonReportRequest": {
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "reportType": {
+          "type": "string"
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "CONSUMER_INFORMATION",
+              "RISK"
+            ]
+          }
+        }
+      },
+      "title": "DkApiPersonReportRequest"
+    },
+    "FiApiPersonReportRequest": {
+      "type": "object",
+      "properties": {
+        "datasetType": {
+          "type": "string"
+        },
+        "identifier": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "reasonCode": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "reportType": {
+          "type": "string"
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "CONSUMER_INFORMATION",
+              "RISK",
+              "BUSINESS_ASSIGNMENTS"
+            ]
+          }
+        }
+      },
+      "title": "FiApiPersonReportRequest"
+    },
+    "FinnishAddress": {
+      "type": "object",
+      "properties": {
+        "additionalRow": {
+          "type": "string"
+        },
+        "coAddress": {
+          "type": "string"
+        },
+        "country": {
+          "$ref": "#/definitions/FinnishCode"
+        },
+        "endDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "format": {
+          "type": "string"
+        },
+        "municipality": {
+          "$ref": "#/definitions/FinnishMunicipality"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+        "postOffice": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "since": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "startDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "streetAddress": {
+          "type": "string"
+        },
+        "town": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "title": "FinnishAddress"
+    },
+    "FinnishBirth": {
+      "type": "object",
+      "properties": {
+        "dateOfBirth": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "placeOfBirth": {
+          "$ref": "#/definitions/FinnishBirthPlace"
+        },
+        "yearOfBirth": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "FinnishBirth"
+    },
+    "FinnishBirthPlace": {
+      "type": "object",
+      "properties": {
+        "country": {
+          "type": "string"
+        },
+        "municipalityCode": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        }
+      },
+      "title": "FinnishBirthPlace"
+    },
+    "FinnishBricClassification": {
+      "type": "object",
+      "properties": {
+        "educationLevel": {
+          "$ref": "#/definitions/FinnishCode"
+        },
+        "homeOwnership": {
+          "$ref": "#/definitions/FinnishCode"
+        },
+        "housingType": {
+          "$ref": "#/definitions/FinnishCode"
+        },
+        "lifeStage": {
+          "$ref": "#/definitions/FinnishCode"
+        },
+        "paymentDefaultRisk": {
+          "$ref": "#/definitions/FinnishCode"
+        },
+        "purchasingPower": {
+          "$ref": "#/definitions/FinnishCode"
+        },
+        "residentalArea": {
+          "$ref": "#/definitions/FinnishCode"
+        }
+      },
+      "title": "FinnishBricClassification"
+    },
+    "FinnishBusinessAssignments": {
+      "type": "object",
+      "properties": {
+        "directorships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishDirectorship"
+          }
+        },
+        "historicalDirectorships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishDirectorship"
+          }
+        }
+      },
+      "title": "FinnishBusinessAssignments"
+    },
+    "FinnishChildsGuardian": {
+      "type": "object",
+      "properties": {
+        "dateOfBirth": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "name": {
+          "$ref": "#/definitions/FinnishLegalName"
+        },
+        "nationalIdentificationNumber": {
+          "type": "string"
+        }
+      },
+      "title": "FinnishChildsGuardian"
+    },
+    "FinnishCode": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "title": "FinnishCode"
+    },
+    "FinnishCompany": {
+      "type": "object",
+      "properties": {
+        "dunsNumber": {
+          "type": "string"
+        },
+        "legalForm": {
+          "$ref": "#/definitions/FinnishCode"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nationalIdentificationNumber": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/FinnishCode"
+        }
+      },
+      "title": "FinnishCompany"
+    },
+    "FinnishCompanyGuardian": {
+      "type": "object",
+      "properties": {
+        "endDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nationalIdentificationNumber": {
+          "type": "string"
+        },
+        "startDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        }
+      },
+      "title": "FinnishCompanyGuardian"
+    },
+    "FinnishConsumerInformation": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "birth": {
+          "$ref": "#/definitions/FinnishBirth"
+        },
+        "continuingPowerOfAttorney": {
+          "$ref": "#/definitions/FinnishContinuingPowerOfAttorney"
+        },
+        "death": {
+          "$ref": "#/definitions/FinnishDeath"
+        },
+        "dependentCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "guardianship": {
+          "$ref": "#/definitions/FinnishGuardianship"
+        },
+        "historicalAddresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishAddress"
+          }
+        },
+        "historicalNames": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishHistoricalName"
+          }
+        },
+        "homeMunicipality": {
+          "$ref": "#/definitions/FinnishMunicipality"
+        },
+        "immigrated": {
+          "type": "boolean"
+        },
+        "legalName": {
+          "$ref": "#/definitions/FinnishLegalName"
+        },
+        "livingConditions": {
+          "$ref": "#/definitions/FinnishLivingConditions"
+        },
+        "marriage": {
+          "$ref": "#/definitions/FinnishMarriage"
+        },
+        "nationalIdentificationNumber": {
+          "type": "string"
+        },
+        "nationality": {
+          "$ref": "#/definitions/FinnishNationality"
+        },
+        "nativeLanguage": {
+          "type": "string"
+        },
+        "ownership": {
+          "$ref": "#/definitions/FinnishOwnership"
+        },
+        "registeredAddresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishAddress"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ALIVE",
+            "DECEASED"
+          ]
+        }
+      },
+      "title": "FinnishConsumerInformation"
+    },
+    "FinnishContinuingPowerOfAttorney": {
+      "type": "object",
+      "properties": {
+        "authorizedDonees": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishPersonBase"
+          }
+        },
+        "endDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "ruleForTaskSharing": {
+          "$ref": "#/definitions/FinnishRuleForTaskSharing"
+        },
+        "startDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        }
+      },
+      "title": "FinnishContinuingPowerOfAttorney"
+    },
+    "FinnishDateModel": {
+      "type": "object",
+      "properties": {
+        "day": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "month": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "year": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "FinnishDateModel"
+    },
+    "FinnishDeath": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "dead": {
+          "type": "boolean"
+        },
+        "declarationDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        }
+      },
+      "title": "FinnishDeath"
+    },
+    "FinnishDirectorship": {
+      "type": "object",
+      "properties": {
+        "appointmentDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "company": {
+          "$ref": "#/definitions/FinnishCompany"
+        },
+        "resignationDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "type": {
+          "$ref": "#/definitions/FinnishCode"
+        }
+      },
+      "title": "FinnishDirectorship"
+    },
+    "FinnishGuardians": {
+      "type": "object",
+      "properties": {
+        "companiesAndCorporate": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishCompanyGuardian"
+          }
+        },
+        "endDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "legalAidOffices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishLegalAidOfficeGuardian"
+          }
+        },
+        "municipalities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishMunicipalityGuardian"
+          }
+        },
+        "persons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishPersonBase"
+          }
+        },
+        "restriction": {
+          "$ref": "#/definitions/FinnishCode"
+        },
+        "ruleForTaskSharing": {
+          "$ref": "#/definitions/FinnishRuleForTaskSharing"
+        },
+        "startDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        }
+      },
+      "title": "FinnishGuardians"
+    },
+    "FinnishGuardianship": {
+      "type": "object",
+      "properties": {
+        "childsGuardians": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishChildsGuardian"
+          }
+        },
+        "guardians": {
+          "$ref": "#/definitions/FinnishGuardians"
+        },
+        "hasGuardianship": {
+          "type": "boolean"
+        }
+      },
+      "title": "FinnishGuardianship"
+    },
+    "FinnishHistoricalName": {
+      "type": "object",
+      "properties": {
+        "correction": {
+          "type": "boolean"
+        },
+        "lastNameBeforeMarriage": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "title": "FinnishHistoricalName"
+    },
+    "FinnishLegalAidOfficeGuardian": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "endDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "name": {
+          "type": "string"
+        },
+        "startDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        }
+      },
+      "title": "FinnishLegalAidOfficeGuardian"
+    },
+    "FinnishLegalName": {
+      "type": "object",
+      "properties": {
+        "familyName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "fullName": {
+          "type": "string"
+        }
+      },
+      "title": "FinnishLegalName"
+    },
+    "FinnishLivingConditions": {
+      "type": "object",
+      "properties": {
+        "areaInSquareMeter": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "residents": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "FinnishLivingConditions"
+    },
+    "FinnishMarriage": {
+      "type": "object",
+      "properties": {
+        "previousStatus": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "title": "FinnishMarriage"
+    },
+    "FinnishMunicipality": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "startDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "title": "FinnishMunicipality"
+    },
+    "FinnishMunicipalityGuardian": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "endDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "name": {
+          "type": "string"
+        },
+        "startDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        }
+      },
+      "title": "FinnishMunicipalityGuardian"
+    },
+    "FinnishNationality": {
+      "type": "object",
+      "properties": {
+        "bornInUsa": {
+          "type": "boolean"
+        },
+        "nationalities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishNationalityCountry"
+          }
+        },
+        "usaCitizen": {
+          "type": "boolean"
+        }
+      },
+      "title": "FinnishNationality"
+    },
+    "FinnishNationalityCountry": {
+      "type": "object",
+      "properties": {
+        "country": {
+          "$ref": "#/definitions/FinnishCode"
+        },
+        "grantedDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        }
+      },
+      "title": "FinnishNationalityCountry"
+    },
+    "FinnishOtherRemarks": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "bannedOnBusinessOperations": {
+          "type": "boolean"
+        },
+        "number": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "remarkGroups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishRemarkGroup"
+          }
+        },
+        "underGuardianship": {
+          "type": "boolean"
+        }
+      },
+      "title": "FinnishOtherRemarks"
+    },
+    "FinnishOwnership": {
+      "type": "object",
+      "properties": {
+        "ownsBuildingsDirectly": {
+          "type": "boolean"
+        },
+        "ownsPropertiesOrParcels": {
+          "type": "boolean"
+        }
+      },
+      "title": "FinnishOwnership"
+    },
+    "FinnishPayment": {
+      "type": "object",
+      "properties": {
+        "otherRemarks": {
+          "$ref": "#/definitions/FinnishOtherRemarks"
+        },
+        "paymentRemark": {
+          "$ref": "#/definitions/FinnishPaymentRemarks"
+        }
+      },
+      "title": "FinnishPayment"
+    },
+    "FinnishPaymentRemarks": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "number": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "remarkGroups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishRemarkGroup"
+          }
+        }
+      },
+      "title": "FinnishPaymentRemarks"
+    },
+    "FinnishPersonBase": {
+      "type": "object",
+      "properties": {
+        "dateOfBirth": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "endDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "name": {
+          "$ref": "#/definitions/FinnishLegalName"
+        },
+        "nationalIdentificationNumber": {
+          "type": "string"
+        },
+        "startDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        }
+      },
+      "title": "FinnishPersonBase"
+    },
+    "FinnishPersonReport": {
+      "type": "object",
+      "properties": {
+        "businessAssignments": {
+          "$ref": "#/definitions/FinnishBusinessAssignments"
+        },
+        "consumerInformation": {
+          "$ref": "#/definitions/FinnishConsumerInformation"
+        },
+        "personId": {
+          "type": "string"
+        },
+        "risk": {
+          "$ref": "#/definitions/FinnishRisk"
+        }
+      },
+      "title": "FinnishPersonReport"
+    },
+    "FinnishRemark": {
+      "type": "object",
+      "properties": {
+        "additionalInfo": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "integer"
+        },
+        "case": {
+          "$ref": "#/definitions/FinnishRemarkCase"
+        },
+        "code": {
+          "type": "string"
+        },
+        "creditor": {
+          "type": "string"
+        },
+        "date": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "paidDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        },
+        "source": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "validToDate": {
+          "$ref": "#/definitions/FinnishDateModel"
+        }
+      },
+      "title": "FinnishRemark"
+    },
+    "FinnishRemarkCase": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "title": "FinnishRemarkCase"
+    },
+    "FinnishRemarkGroup": {
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": "string"
+        },
+        "remarks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FinnishRemark"
+          }
+        }
+      },
+      "title": "FinnishRemarkGroup"
+    },
+    "FinnishRisk": {
+      "type": "object",
+      "properties": {
+        "bricClassification": {
+          "$ref": "#/definitions/FinnishBricClassification"
+        },
+        "payment": {
+          "$ref": "#/definitions/FinnishPayment"
+        }
+      },
+      "title": "FinnishRisk"
+    },
+    "FinnishRuleForTaskSharing": {
+      "type": "object",
+      "properties": {
+        "hasRule": {
+          "type": "boolean"
+        },
+        "rule": {
+          "type": "string"
+        }
+      },
+      "title": "FinnishRuleForTaskSharing"
+    },
+    "NoApiPersonReportRequest": {
+      "type": "object",
+      "properties": {
+        "endUser": {
+          "type": "string"
+        },
+        "identifier": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "reportType": {
+          "type": "string"
+        },
+        "scoreModel": {
+          "type": "string"
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "CONSUMER_INFORMATION",
+              "RISK",
+              "ACTIVITIES",
+              "FINANCE",
+              "BUSINESS_ASSIGNMENTS"
+            ]
+          }
+        }
+      },
+      "title": "NoApiPersonReportRequest"
+    },
+    "NorwegianAddress": {
+      "type": "object",
+      "properties": {
+        "coAddress": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "streetAddress": {
+          "type": "string"
+        },
+        "town": {
+          "type": "string"
+        }
+      },
+      "title": "NorwegianAddress"
+    },
+    "NorwegianAssessment": {
+      "type": "object",
+      "properties": {
+        "income": {
+          "$ref": "#/definitions/NorwegianIncome"
+        },
+        "incomeYear": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "taxes": {
+          "$ref": "#/definitions/NorwegianTaxes"
+        },
+        "year": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "NorwegianAssessment"
+    },
+    "NorwegianBusinessAssignments": {
+      "type": "object",
+      "properties": {
+        "directorships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NorwegianDirectorship"
+          }
+        },
+        "soleProprietorship": {
+          "$ref": "#/definitions/NorwegianSoleProprietorship"
+        }
+      },
+      "title": "NorwegianBusinessAssignments"
+    },
+    "NorwegianCode": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "title": "NorwegianCode"
+    },
+    "NorwegianCompanyData": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "nationalIdentificationNumber": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/NorwegianCompanyStatus"
+        }
+      },
+      "title": "NorwegianCompanyData"
+    },
+    "NorwegianCompanyRegistration": {
+      "type": "object",
+      "properties": {
+        "nameRegistrationDate": {
+          "$ref": "#/definitions/NorwegianDateModel"
+        },
+        "registrationDate": {
+          "$ref": "#/definitions/NorwegianDateModel"
+        },
+        "status": {
+          "$ref": "#/definitions/NorwegianStatus"
+        }
+      },
+      "title": "NorwegianCompanyRegistration"
+    },
+    "NorwegianCompanyStatus": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "$ref": "#/definitions/NorwegianDateModel"
+        },
+        "status": {
+          "$ref": "#/definitions/NorwegianStatus"
+        }
+      },
+      "title": "NorwegianCompanyStatus"
+    },
+    "NorwegianConsumerInformation": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "country": {
+          "type": "string"
+        },
+        "dateOfBirth": {
+          "$ref": "#/definitions/NorwegianDateModel"
+        },
+        "emigration": {
+          "$ref": "#/definitions/NorwegianDateModel"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "legalName": {
+          "$ref": "#/definitions/NorwegianLegalName"
+        },
+        "protectedDataStatus": {
+          "$ref": "#/definitions/NorwegianCode"
+        },
+        "registeredAddress": {
+          "$ref": "#/definitions/NorwegianAddress"
+        }
+      },
+      "title": "NorwegianConsumerInformation"
+    },
+    "NorwegianCreditRating": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "exclusionReasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NorwegianCreditRatingExclusionCode"
+          }
+        },
+        "score": {
+          "$ref": "#/definitions/NorwegianScore"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "title": "NorwegianCreditRating"
+    },
+    "NorwegianCreditRatingExclusionCode": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "PERSON_NOT_FOUND",
+            "EXPIRED_NATIONAL_ID",
+            "POST_CODE_0000",
+            "SEVERE_PAYMENT_REMARK",
+            "EMIGRATED",
+            "AGE_UNDER_18",
+            "SPECIAL_INFORMATION",
+            "INTERMITTENT_ID",
+            "DECEASED"
+          ]
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "title": "NorwegianCreditRatingExclusionCode"
+    },
+    "NorwegianDateModel": {
+      "type": "object",
+      "properties": {
+        "day": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "month": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "year": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "NorwegianDateModel"
+    },
+    "NorwegianDirectorship": {
+      "type": "object",
+      "properties": {
+        "appointmentDate": {
+          "$ref": "#/definitions/NorwegianDateModel"
+        },
+        "company": {
+          "$ref": "#/definitions/NorwegianCompanyData"
+        },
+        "ownedSharePercentage": {
+          "type": "number"
+        },
+        "resignationDate": {
+          "$ref": "#/definitions/NorwegianDateModel"
+        },
+        "type": {
+          "$ref": "#/definitions/NorwegianCode"
+        }
+      },
+      "title": "NorwegianDirectorship"
+    },
+    "NorwegianEvent": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "$ref": "#/definitions/NorwegianCode"
+        },
+        "date": {
+          "$ref": "#/definitions/NorwegianDateModel"
+        },
+        "type": {
+          "$ref": "#/definitions/NorwegianCode"
+        }
+      },
+      "title": "NorwegianEvent"
+    },
+    "NorwegianEvents": {
+      "type": "object",
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NorwegianEvent"
+          }
+        }
+      },
+      "title": "NorwegianEvents"
+    },
+    "NorwegianFinance": {
+      "type": "object",
+      "properties": {
+        "assessments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NorwegianAssessment"
+          }
+        }
+      },
+      "title": "NorwegianFinance"
+    },
+    "NorwegianIncome": {
+      "type": "object",
+      "properties": {
+        "calcTotalGrossIncome": {
+          "type": "integer"
+        },
+        "netAssets": {
+          "type": "integer"
+        },
+        "netIncome": {
+          "type": "integer"
+        }
+      },
+      "title": "NorwegianIncome"
+    },
+    "NorwegianLegalForm": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "LIMITED_COMPANY",
+            "SOLE_PROPRIETORSHIP",
+            "TRADING_LIMITED_PARTNERSHIP",
+            "NORWAY_DIVISION_FOREIGN_ENTERPRISE",
+            "OTHER"
+          ]
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "title": "NorwegianLegalForm"
+    },
+    "NorwegianLegalName": {
+      "type": "object",
+      "properties": {
+        "familyName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "fullName": {
+          "type": "string"
+        },
+        "givenName": {
+          "type": "string"
+        },
+        "middleName": {
+          "type": "string"
+        }
+      },
+      "title": "NorwegianLegalName"
+    },
+    "NorwegianPayment": {
+      "type": "object",
+      "properties": {
+        "paymentRemark": {
+          "$ref": "#/definitions/NorwegianPaymentRemark"
+        },
+        "voluntaryPledges": {
+          "$ref": "#/definitions/NorwegianPaymentRemark"
+        }
+      },
+      "title": "NorwegianPayment"
+    },
+    "NorwegianPaymentRemark": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "number": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "partiallyPaidAmount": {
+          "type": "integer"
+        },
+        "partiallyPaidCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "remarkGroups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NorwegianPaymentRemarkGroup"
+          }
+        },
+        "unpaidAmount": {
+          "type": "integer"
+        },
+        "unpaidCount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "NorwegianPaymentRemark"
+    },
+    "NorwegianPaymentRemarkGroup": {
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": "string"
+        },
+        "remarks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NorwegianRemark"
+          }
+        }
+      },
+      "title": "NorwegianPaymentRemarkGroup"
+    },
+    "NorwegianPersonReport": {
+      "type": "object",
+      "properties": {
+        "businessAssignments": {
+          "$ref": "#/definitions/NorwegianBusinessAssignments"
+        },
+        "consumerInformation": {
+          "$ref": "#/definitions/NorwegianConsumerInformation"
+        },
+        "creditBlocked": {
+          "type": "boolean"
+        },
+        "events": {
+          "$ref": "#/definitions/NorwegianEvents"
+        },
+        "finance": {
+          "$ref": "#/definitions/NorwegianFinance"
+        },
+        "personId": {
+          "type": "string"
+        },
+        "risk": {
+          "$ref": "#/definitions/NorwegianRisk"
+        }
+      },
+      "title": "NorwegianPersonReport"
+    },
+    "NorwegianRemark": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "creditor": {
+          "type": "string"
+        },
+        "date": {
+          "$ref": "#/definitions/NorwegianDateModel"
+        },
+        "description": {
+          "type": "string"
+        },
+        "documentNumber": {
+          "type": "string"
+        },
+        "paidState": {
+          "type": "string",
+          "enum": [
+            "PARTIALLY_PAID",
+            "UNPAID"
+          ]
+        },
+        "reference": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "title": "NorwegianRemark"
+    },
+    "NorwegianRisk": {
+      "type": "object",
+      "properties": {
+        "bankruptcy": {
+          "type": "boolean"
+        },
+        "creditRating": {
+          "$ref": "#/definitions/NorwegianCreditRating"
+        },
+        "payment": {
+          "$ref": "#/definitions/NorwegianPayment"
+        }
+      },
+      "title": "NorwegianRisk"
+    },
+    "NorwegianScore": {
+      "type": "object",
+      "properties": {
+        "probabilityOfDefault": {
+          "type": "number"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "NorwegianScore"
+    },
+    "NorwegianSoleProprietorship": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/NorwegianAddress"
+        },
+        "dunsNumber": {
+          "type": "string"
+        },
+        "legalForm": {
+          "$ref": "#/definitions/NorwegianLegalForm"
+        },
+        "naceCode": {
+          "$ref": "#/definitions/NorwegianCode"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nationalIdentificationNumber": {
+          "type": "string"
+        },
+        "registration": {
+          "$ref": "#/definitions/NorwegianCompanyRegistration"
+        },
+        "status": {
+          "$ref": "#/definitions/NorwegianCompanyStatus"
+        },
+        "tradeStyles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NorwegianTradeStyle"
+          }
+        }
+      },
+      "title": "NorwegianSoleProprietorship"
+    },
+    "NorwegianStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "INACTIVE",
+            "NOTSTARTED_OR_DORMANT"
+          ]
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "title": "NorwegianStatus"
+    },
+    "NorwegianTaxes": {
+      "type": "object",
+      "properties": {
+        "finalTax": {
+          "type": "integer"
+        },
+        "municipalityName": {
+          "type": "string"
+        },
+        "municipalityNumber": {
+          "type": "string"
+        },
+        "taxClass": {
+          "type": "string"
+        }
+      },
+      "title": "NorwegianTaxes"
+    },
+    "NorwegianTradeStyle": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/NorwegianAddress"
+        },
+        "naceCode": {
+          "$ref": "#/definitions/NorwegianCode"
+        },
+        "name": {
+          "type": "string"
+        },
+        "registrationDate": {
+          "$ref": "#/definitions/NorwegianDateModel"
+        }
+      },
+      "title": "NorwegianTradeStyle"
+    },
+    "Paging": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "resultCount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Paging"
+    }
+  }
+}
